@@ -1,0 +1,869 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLACKSYNC — Intelligence Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Bebas+Neue&family=IBM+Plex+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #00ff88;
+    --green-dim: rgba(0,255,136,0.15);
+    --green-faint: rgba(0,255,136,0.04);
+    --red: #ff2d2d;
+    --orange: #ff6b00;
+    --gold: #ffd700;
+    --bg: #05080d;
+    --bg2: #080c13;
+    --text: #b8ccd8;
+    --text-bright: #ddeeff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'IBM Plex Mono', monospace;
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  /* SCANLINES */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,255,136,0.012) 2px,
+      rgba(0,255,136,0.012) 4px
+    );
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* GRID BG */
+  body::after {
+    content: '';
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(0,255,136,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,255,136,0.025) 1px, transparent 1px);
+    background-size: 48px 48px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ======= TOP BAR ======= */
+  #topbar {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 40px;
+    background: rgba(5,8,13,0.92);
+    border-bottom: 1px solid rgba(0,255,136,0.15);
+    backdrop-filter: blur(10px);
+    font-size: 10px; letter-spacing: 3px;
+  }
+  #topbar .brand { color: var(--green); }
+  #topbar .date-str { color: rgba(0,255,136,0.45); }
+  #topbar .live-dot {
+    color: var(--red);
+    display: flex; align-items: center; gap: 6px;
+    animation: pulse 2s infinite;
+  }
+  #topbar .live-dot::before {
+    content: '●'; font-size: 8px;
+  }
+
+  /* ======= NAV ======= */
+  nav {
+    position: fixed; top: 38px; left: 0; right: 0;
+    z-index: 999;
+    display: flex; align-items: center; gap: 0;
+    padding: 0 40px;
+    background: rgba(5,8,13,0.88);
+    border-bottom: 1px solid rgba(0,255,136,0.1);
+    backdrop-filter: blur(10px);
+  }
+  nav .logo-wrap {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 0; margin-right: 40px;
+    border-right: 1px solid rgba(0,255,136,0.1);
+    padding-right: 40px;
+  }
+  nav .logo-icon {
+    width: 36px; height: 36px;
+    border: 2px solid var(--green);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; color: var(--green);
+    box-shadow: 0 0 16px rgba(0,255,136,0.25);
+  }
+  nav .logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px; letter-spacing: 6px;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(0,255,136,0.3);
+  }
+  nav .logo-sub {
+    font-size: 8px; letter-spacing: 4px; color: var(--green);
+    margin-top: 2px;
+  }
+  nav .nav-links {
+    display: flex; gap: 0; list-style: none;
+  }
+  nav .nav-links a {
+    display: block; padding: 16px 20px;
+    color: rgba(0,255,136,0.55);
+    text-decoration: none;
+    font-size: 10px; letter-spacing: 3px;
+    transition: all 0.2s;
+    border-bottom: 2px solid transparent;
+  }
+  nav .nav-links a:hover,
+  nav .nav-links a.active {
+    color: var(--green);
+    border-bottom-color: var(--green);
+    background: var(--green-faint);
+  }
+  nav .nav-right {
+    margin-left: auto;
+    display: flex; align-items: center; gap: 12px;
+  }
+  nav .search-box {
+    background: transparent;
+    border: 1px solid rgba(0,255,136,0.2);
+    color: var(--green);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; letter-spacing: 2px;
+    padding: 6px 14px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  nav .search-box:focus { border-color: var(--green); }
+  nav .search-box::placeholder { color: rgba(0,255,136,0.3); }
+
+  /* ======= HERO ======= */
+  #hero {
+    padding: 160px 40px 80px;
+    max-width: 1100px; margin: 0 auto;
+    position: relative; z-index: 1;
+  }
+  .hero-eyebrow {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 24px;
+    opacity: 0; animation: fadeUp 0.8s 0.2s forwards;
+  }
+  .hero-eyebrow span {
+    font-size: 9px; letter-spacing: 5px; color: rgba(0,255,136,0.6);
+  }
+  .hero-eyebrow::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, rgba(0,255,136,0.3), transparent);
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 8vw, 96px);
+    line-height: 0.95;
+    letter-spacing: 6px;
+    color: #fff;
+    margin-bottom: 8px;
+    opacity: 0; animation: fadeUp 0.8s 0.35s forwards;
+  }
+  .hero-title .accent { color: var(--green); }
+
+  .hero-tagline {
+    font-size: 11px; letter-spacing: 6px;
+    color: rgba(0,255,136,0.5);
+    margin-bottom: 36px;
+    opacity: 0; animation: fadeUp 0.8s 0.5s forwards;
+  }
+
+  .hero-desc-box {
+    border: 1px solid rgba(0,255,136,0.18);
+    border-left: 3px solid var(--green);
+    background: rgba(0,255,136,0.03);
+    padding: 28px 32px;
+    position: relative;
+    max-width: 760px;
+    margin-bottom: 40px;
+    opacity: 0; animation: fadeUp 0.8s 0.65s forwards;
+  }
+  .hero-desc-box .label-tag {
+    position: absolute; top: -1px; right: 20px;
+    background: var(--green); color: #000;
+    font-size: 8px; letter-spacing: 4px;
+    padding: 3px 12px; font-weight: 700;
+  }
+  .hero-desc-box p {
+    font-size: 14px; line-height: 1.9;
+    color: var(--text-bright);
+  }
+  .hero-desc-box p .hl { color: var(--green); font-weight: 600; }
+  .hero-desc-box p .hl-gold { color: var(--gold); }
+  .hero-desc-box p .hl-red { color: var(--red); }
+  .hero-desc-box p .hl-orange { color: var(--orange); }
+
+  /* Stats */
+  .stats-row {
+    display: flex; gap: 0;
+    border: 1px solid rgba(0,255,136,0.1);
+    max-width: 600px;
+    opacity: 0; animation: fadeUp 0.8s 0.8s forwards;
+    margin-bottom: 60px;
+  }
+  .stat-item {
+    flex: 1; padding: 20px 0; text-align: center;
+    border-right: 1px solid rgba(0,255,136,0.1);
+  }
+  .stat-item:last-child { border-right: none; }
+  .stat-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px; letter-spacing: 2px;
+    color: var(--green);
+  }
+  .stat-lbl {
+    font-size: 8px; letter-spacing: 4px;
+    color: rgba(200,216,232,0.4);
+    margin-top: 4px;
+  }
+
+  /* ======= SECTION HEADER ======= */
+  .section-header {
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 28px;
+  }
+  .section-header h2 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px; letter-spacing: 5px; color: #fff;
+  }
+  .section-header::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(90deg, rgba(0,255,136,0.25), transparent);
+  }
+
+  /* ======= FILTER CHIPS ======= */
+  .filter-chips {
+    display: flex; gap: 8px; flex-wrap: wrap;
+    margin-bottom: 32px;
+  }
+  .chip {
+    background: transparent;
+    border: 1px solid rgba(0,255,136,0.2);
+    color: rgba(0,255,136,0.6);
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px; letter-spacing: 3px;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .chip:hover, .chip.active {
+    background: var(--green);
+    color: #000; border-color: var(--green);
+    font-weight: 700;
+  }
+
+  /* ======= ARTICLE GRID ======= */
+  #articles {
+    padding: 40px 40px 80px;
+    max-width: 1100px; margin: 0 auto;
+    position: relative; z-index: 1;
+  }
+
+  .article-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1px;
+    background: rgba(0,255,136,0.06);
+    border: 1px solid rgba(0,255,136,0.08);
+  }
+
+  .article-card {
+    background: var(--bg);
+    padding: 26px 24px;
+    cursor: pointer;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .article-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--green);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s;
+  }
+  .article-card:hover::before { transform: scaleX(1); }
+  .article-card:hover { background: rgba(0,255,136,0.04); }
+
+  .card-top {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 14px;
+  }
+  .card-cat {
+    font-size: 8px; letter-spacing: 3px;
+    background: var(--green); color: #000;
+    padding: 3px 8px; font-weight: 700;
+  }
+  .card-level {
+    font-size: 8px; letter-spacing: 2px;
+    padding: 3px 8px;
+    border: 1px solid;
+  }
+  .level-classified { color: var(--red); border-color: rgba(255,45,45,0.3); }
+  .level-secret { color: var(--orange); border-color: rgba(255,107,0,0.3); }
+  .level-restricted { color: var(--gold); border-color: rgba(255,215,0,0.3); }
+  .level-unclassified { color: var(--green); border-color: rgba(0,255,136,0.3); }
+
+  .card-title {
+    font-size: 13px; font-weight: 600; line-height: 1.55;
+    color: var(--text-bright);
+    margin-bottom: 10px;
+    transition: color 0.2s;
+  }
+  .article-card:hover .card-title { color: #fff; }
+
+  .card-excerpt {
+    font-size: 11px; color: rgba(180,200,220,0.5);
+    line-height: 1.75; margin-bottom: 18px;
+  }
+
+  .card-footer {
+    display: flex; justify-content: space-between;
+    font-size: 9px; color: rgba(0,255,136,0.4);
+    letter-spacing: 1px;
+    border-top: 1px solid rgba(0,255,136,0.07);
+    padding-top: 14px;
+  }
+
+  /* ======= FEATURED ARTICLE ======= */
+  .featured-card {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    background: var(--bg);
+    padding: 0;
+  }
+  .featured-visual {
+    background: linear-gradient(135deg, rgba(0,255,136,0.08), rgba(0,0,0,0.9));
+    display: flex; align-items: center; justify-content: center;
+    font-size: 80px; color: rgba(0,255,136,0.15);
+    min-height: 220px;
+    position: relative;
+    overflow: hidden;
+    border-right: 1px solid rgba(0,255,136,0.08);
+  }
+  .featured-visual .corner-tl,
+  .featured-visual .corner-br {
+    position: absolute;
+    width: 20px; height: 20px;
+    border-color: rgba(0,255,136,0.4);
+    border-style: solid;
+  }
+  .featured-visual .corner-tl { top: 12px; left: 12px; border-width: 2px 0 0 2px; }
+  .featured-visual .corner-br { bottom: 12px; right: 12px; border-width: 0 2px 2px 0; }
+  .featured-content { padding: 32px; display: flex; flex-direction: column; justify-content: center; }
+  .featured-badge {
+    display: inline-block;
+    font-size: 8px; letter-spacing: 4px;
+    color: #000; background: var(--green);
+    padding: 4px 12px; font-weight: 700;
+    margin-bottom: 16px;
+  }
+
+  /* ======= ABOUT SECTION ======= */
+  #about {
+    padding: 60px 40px;
+    max-width: 1100px; margin: 0 auto;
+    position: relative; z-index: 1;
+    border-top: 1px solid rgba(0,255,136,0.08);
+  }
+
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 40px;
+    margin-top: 32px;
+  }
+
+  .about-block {
+    border: 1px solid rgba(0,255,136,0.1);
+    padding: 28px;
+    position: relative;
+    transition: border-color 0.2s;
+  }
+  .about-block:hover { border-color: rgba(0,255,136,0.3); }
+  .about-block h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px; letter-spacing: 4px;
+    color: var(--green); margin-bottom: 14px;
+  }
+  .about-block p {
+    font-size: 12px; line-height: 1.9;
+    color: rgba(180,200,220,0.7);
+  }
+  .about-icon {
+    position: absolute; top: 20px; right: 20px;
+    font-size: 24px; color: rgba(0,255,136,0.15);
+  }
+
+  /* Category pills */
+  .cat-pills {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px;
+  }
+  .cat-pill {
+    font-size: 9px; letter-spacing: 3px;
+    padding: 5px 12px;
+    border: 1px solid;
+  }
+  .cp-green { border-color: rgba(0,255,136,0.3); color: var(--green); }
+  .cp-gold { border-color: rgba(255,215,0,0.3); color: var(--gold); }
+  .cp-orange { border-color: rgba(255,107,0,0.3); color: var(--orange); }
+  .cp-red { border-color: rgba(255,45,45,0.3); color: var(--red); }
+  .cp-blue { border-color: rgba(100,180,255,0.3); color: #64b4ff; }
+
+  /* ======= FOOTER ======= */
+  footer {
+    border-top: 1px solid rgba(0,255,136,0.1);
+    padding: 24px 40px;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(0,0,0,0.4);
+    position: relative; z-index: 1;
+    font-size: 9px; letter-spacing: 2px;
+    color: rgba(0,255,136,0.35);
+  }
+
+  /* ======= MODAL ======= */
+  #modal-overlay {
+    display: none;
+    position: fixed; inset: 0; z-index: 10000;
+    background: rgba(0,0,0,0.85);
+    backdrop-filter: blur(4px);
+    align-items: center; justify-content: center;
+    padding: 20px;
+  }
+  #modal-overlay.open { display: flex; }
+  #modal-box {
+    background: var(--bg2);
+    border: 1px solid rgba(0,255,136,0.25);
+    max-width: 680px; width: 100%;
+    max-height: 85vh; overflow-y: auto;
+    position: relative;
+  }
+  #modal-box .modal-header {
+    padding: 28px 28px 20px;
+    border-bottom: 1px solid rgba(0,255,136,0.1);
+  }
+  #modal-box .modal-body { padding: 24px 28px 32px; }
+  #modal-close {
+    position: absolute; top: 16px; right: 16px;
+    background: transparent; border: 1px solid rgba(0,255,136,0.2);
+    color: var(--green); cursor: pointer;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px; letter-spacing: 2px;
+    padding: 6px 12px;
+  }
+  #modal-close:hover { background: var(--green); color: #000; }
+
+  /* ======= ANIMATIONS ======= */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  @keyframes glitch {
+    0% { text-shadow: 3px 0 #ff2d2d, -3px 0 #00ffff; }
+    20% { text-shadow: -3px 0 #ff2d2d, 3px 0 #00ffff; }
+    40% { text-shadow: 0 0 none; }
+    100% { text-shadow: 0 0 none; }
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+  .blink { animation: blink 1s infinite; }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: rgba(0,255,136,0.3); }
+
+  @media (max-width: 700px) {
+    #topbar, nav { padding: 8px 16px; }
+    #hero, #articles, #about { padding-left: 16px; padding-right: 16px; }
+    .about-grid { grid-template-columns: 1fr; }
+    .featured-card { grid-template-columns: 1fr; }
+    .featured-visual { min-height: 120px; }
+    nav .nav-links a { padding: 12px 10px; font-size: 9px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div id="topbar">
+  <span class="brand">◈ BLACKSYNC INTELLIGENCE NETWORK</span>
+  <span class="date-str" id="date-str">—</span>
+  <span class="live-dot">LIVE</span>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo-wrap">
+    <div class="logo-icon">◈</div>
+    <div>
+      <div class="logo-text" id="logo-glitch">BLACKSYNC</div>
+      <div class="logo-sub">INTELLIGENCE PLATFORM</div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#hero" class="active" onclick="setActive(this)">BERANDA</a></li>
+    <li><a href="#articles" onclick="setActive(this)">ARTIKEL</a></li>
+    <li><a href="#about" onclick="setActive(this)">TENTANG</a></li>
+  </ul>
+  <div class="nav-right">
+    <input class="search-box" type="text" placeholder="// CARI ARTIKEL..." oninput="filterSearch(this.value)">
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-eyebrow"><span>INTELLIGENCE PLATFORM · EST. 2024</span></div>
+  <div class="hero-title">BLACK<span class="accent">SYNC</span><br>INTEL HUB</div>
+  <div class="hero-tagline">ANALISIS · RISET · STRATEGI · KECERDASAN</div>
+
+  <div class="hero-desc-box">
+    <span class="label-tag">TENTANG PLATFORM</span>
+    <p>
+      Kumpulan artikel dan analisis intelijen <span class="hl">BLACKSYNC</span>
+      dari beragam tema — mulai dari <span class="hl-gold">finansial</span>,
+      <span class="hl-gold">bisnis</span>, <span class="hl-orange">intelijen</span>,
+      <span class="hl-red">militer</span>, dan banyak lagi. Setiap konten disusun
+      berdasarkan riset mendalam untuk memberikan pemahaman yang tajam terhadap
+      dinamika kekuasaan, ekonomi, dan keamanan global.<br><br>
+      Platform ini hadir sebagai ruang analisis independen yang memadukan
+      metodologi intelijen dengan jurnalisme berbasis data —
+      membaca dunia melampaui permukaan. <span class="blink" style="color:var(--green)">█</span>
+    </p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-item"><div class="stat-val" id="c1">0</div><div class="stat-lbl">ARTIKEL</div></div>
+    <div class="stat-item"><div class="stat-val" id="c2">0</div><div class="stat-lbl">KATEGORI</div></div>
+    <div class="stat-item"><div class="stat-val" id="c3">0</div><div class="stat-lbl">PEMBACA</div></div>
+    <div class="stat-item"><div class="stat-val" id="c4">0</div><div class="stat-lbl">ANALISIS/BULAN</div></div>
+  </div>
+</section>
+
+<!-- ARTICLES -->
+<section id="articles">
+  <div class="section-header"><h2>// ARTIKEL TERBARU</h2></div>
+
+  <div class="filter-chips">
+    <button class="chip active" onclick="filterCat('all', this)">◈ SEMUA</button>
+    <button class="chip" onclick="filterCat('finansial', this)">₿ FINANSIAL</button>
+    <button class="chip" onclick="filterCat('bisnis', this)">◎ BISNIS</button>
+    <button class="chip" onclick="filterCat('intelijen', this)">◉ INTELIJEN</button>
+    <button class="chip" onclick="filterCat('militer', this)">✦ MILITER</button>
+    <button class="chip" onclick="filterCat('geopolitik', this)">⊕ GEOPOLITIK</button>
+  </div>
+
+  <div class="article-grid" id="article-grid"></div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-header"><h2>// TENTANG BLACKSYNC</h2></div>
+  <div class="about-grid">
+    <div class="about-block">
+      <span class="about-icon">◈</span>
+      <h3>MISI KAMI</h3>
+      <p>BLACKSYNC hadir sebagai platform analisis intelijen independen yang menyajikan konten berkualitas tinggi dari perspektif yang jarang disoroti media arus utama. Kami menggunakan metodologi riset berbasis data, OSINT, dan analisis geopolitik.</p>
+    </div>
+    <div class="about-block">
+      <span class="about-icon">◉</span>
+      <h3>CAKUPAN TEMA</h3>
+      <p>Artikel kami mencakup berbagai domain strategis yang saling terhubung:</p>
+      <div class="cat-pills">
+        <span class="cat-pill cp-gold">FINANSIAL</span>
+        <span class="cat-pill cp-gold">BISNIS</span>
+        <span class="cat-pill cp-orange">INTELIJEN</span>
+        <span class="cat-pill cp-red">MILITER</span>
+        <span class="cat-pill cp-blue">GEOPOLITIK</span>
+        <span class="cat-pill cp-green">TEKNOLOGI</span>
+        <span class="cat-pill cp-green">SIBER</span>
+      </div>
+    </div>
+    <div class="about-block">
+      <span class="about-icon">✦</span>
+      <h3>METODOLOGI</h3>
+      <p>Setiap artikel melalui proses riset dan verifikasi berlapis. Kami menggabungkan analisis dokumen primer, triangulasi sumber, dan kerangka intelijen kompetitif untuk menghasilkan konten yang akurat dan bernilai strategis.</p>
+    </div>
+    <div class="about-block">
+      <span class="about-icon">⊕</span>
+      <h3>INDEPENDENSI</h3>
+      <p>BLACKSYNC tidak terafiliasi dengan lembaga pemerintah, korporasi, maupun partai politik manapun. Seluruh konten merepresentasikan analisis independen tim redaksi berdasarkan fakta dan data yang dapat diverifikasi.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>© 2025 BLACKSYNC · ALL RIGHTS RESERVED</span>
+  <span>SECURE CONNECTION ● ENCRYPTED ● INDEPENDENT</span>
+  <span id="clock-ft">--:--:--</span>
+</footer>
+
+<!-- MODAL -->
+<div id="modal-overlay">
+  <div id="modal-box">
+    <button id="modal-close" onclick="closeModal()">✕ TUTUP</button>
+    <div class="modal-header" id="modal-header"></div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<script>
+// ===== DATA =====
+const articles = [
+  {
+    id: 1, cat: "intelijen", tag: "INTELIJEN", icon: "◉",
+    level: "classified", levelLabel: "CLASSIFIED",
+    title: "Peta Kekuatan Intelijen Asia Tenggara 2025",
+    excerpt: "Analisis mendalam jaringan badan intelijen regional dan pergeseran dominasi geopolitik pasca-pandemi.",
+    date: "04 MAR 2025", read: "12 menit",
+    body: "Kawasan Asia Tenggara menjadi arena persaingan intelijen yang semakin kompleks pasca-2020. Setidaknya 11 badan intelijen nasional aktif beroperasi, dengan keterlibatan aktor eksternal dari AS, China, dan Rusia yang terus meningkat. Artikel ini memetakan jaringan tersebut secara komprehensif berdasarkan data OSINT terbaru.",
+    featured: true
+  },
+  {
+    id: 2, cat: "finansial", tag: "FINANSIAL", icon: "₿",
+    level: "restricted", levelLabel: "RESTRICTED",
+    title: "Shadow Banking & Arus Modal Gelap Global",
+    excerpt: "Bagaimana sistem perbankan bayangan menggerakkan triliunan dolar di luar jangkauan regulasi konvensional.",
+    date: "01 MAR 2025", read: "9 menit",
+    body: "Shadow banking system secara global diperkirakan mengelola aset senilai lebih dari $67 triliun — hampir setara PDB dunia. Artikel ini menguraikan mekanisme operasional, jalur arus modal, dan implikasinya terhadap stabilitas keuangan global."
+  },
+  {
+    id: 3, cat: "militer", tag: "MILITER", icon: "✦",
+    level: "secret", levelLabel: "SECRET",
+    title: "Doktrin Perang Hibrida: Ancaman Baru Abad 21",
+    excerpt: "Menelaah strategi kombatan non-konvensional yang memadukan operasi siber, disinformasi, dan kekuatan konvensional.",
+    date: "27 FEB 2025", read: "15 menit",
+    body: "Perang hibrida menggabungkan instrumen kekuatan militer konvensional dengan operasi siber, kampanye disinformasi, proksi bersenjata, dan tekanan ekonomi. Analisis ini mengkaji doktrin terkini dari berbagai kekuatan militer global dan implikasinya bagi keamanan regional."
+  },
+  {
+    id: 4, cat: "bisnis", tag: "BISNIS", icon: "◎",
+    level: "restricted", levelLabel: "RESTRICTED",
+    title: "Konglomerasi Tersembunyi: Siapa Pemilik Siapa?",
+    excerpt: "Pemetaan jaringan kepemilikan korporasi besar Indonesia yang saling terhubung di balik layar.",
+    date: "24 FEB 2025", read: "11 menit",
+    body: "Di balik wajah publik perusahaan-perusahaan besar Indonesia tersimpan jaringan kepemilikan yang sangat kompleks. Melalui analisis laporan keuangan, struktur holding, dan dokumen korporasi, artikel ini memetakan siapa sesungguhnya yang mengendalikan ekonomi Indonesia."
+  },
+  {
+    id: 5, cat: "intelijen", tag: "INTELIJEN", icon: "◉",
+    level: "unclassified", levelLabel: "UNCLASSIFIED",
+    title: "OSINT: Teknik Pengumpulan Informasi Terbuka",
+    excerpt: "Panduan praktis metodologi Open Source Intelligence yang digunakan agen intelijen kelas dunia.",
+    date: "20 FEB 2025", read: "8 menit",
+    body: "Open Source Intelligence (OSINT) adalah metodologi pengumpulan intelijen dari sumber-sumber yang tersedia publik. Dari media sosial hingga citra satelit komersial, teknik-teknik ini memberikan gambaran komprehensif yang sering kali melampaui kemampuan sumber tertutup."
+  },
+  {
+    id: 6, cat: "finansial", tag: "FINANSIAL", icon: "₿",
+    level: "restricted", levelLabel: "RESTRICTED",
+    title: "Petrodolar Runtuh? Tatanan Moneter Baru",
+    excerpt: "Analisis pergeseran hegemoni dolar AS di tengah meningkatnya penggunaan yuan dalam perdagangan energi global.",
+    date: "17 FEB 2025", read: "13 menit",
+    body: "Sistem petrodolar yang mendominasi perdagangan energi global sejak 1974 kini menghadapi tantangan serius. Meningkatnya penggunaan yuan, rencana BRICS currency, dan diversifikasi cadangan devisa bank sentral global menandai awal dari pergeseran tatanan moneter yang fundamental."
+  },
+  {
+    id: 7, cat: "geopolitik", tag: "GEOPOLITIK", icon: "⊕",
+    level: "classified", levelLabel: "CLASSIFIED",
+    title: "Belt & Road 2.0: Strategi Baru Ekspansi China",
+    excerpt: "Membedah evolusi BRI dan bagaimana China meredesain strategi geopolitik ekonominya pasca-pandemi.",
+    date: "14 FEB 2025", read: "14 menit",
+    body: "Belt and Road Initiative (BRI) generasi baru mengadopsi pendekatan yang lebih selektif namun lebih dalam. Dari infrastruktur fisik ke infrastruktur digital, dari pinjaman ke investasi ekuitas — China medesain ulang cara pengaruhnya bekerja di Selatan Global."
+  },
+  {
+    id: 8, cat: "bisnis", tag: "BISNIS", icon: "◎",
+    level: "unclassified", levelLabel: "UNCLASSIFIED",
+    title: "Startup Unicorn vs Konglomerat: Perang Modal Indonesia",
+    excerpt: "Dinamika persaingan antara ekosistem digital baru dan kekuatan konglomerat lama dalam merebut dominasi ekonomi.",
+    date: "10 FEB 2025", read: "10 menit",
+    body: "Kemunculan unicorn digital Indonesia seperti GoTo, Traveloka, dan Bukalapak menghadirkan peta persaingan baru yang menantang dominasi konglomerat lama. Namun fenomena terbaru menunjukkan keduanya saling merangkul, bukan bersaing — menciptakan entitas hybrid yang lebih kuat dari sebelumnya."
+  },
+  {
+    id: 9, cat: "militer", tag: "MILITER", icon: "✦",
+    level: "secret", levelLabel: "SECRET",
+    title: "AI di Medan Tempur: Revolusi Peperangan Otonom",
+    excerpt: "Dari drone kamikaze hingga sistem pertahanan berbasis AI — bagaimana kecerdasan buatan mengubah wajah perang modern.",
+    date: "06 FEB 2025", read: "16 menit",
+    body: "Integrasi AI dalam sistem persenjataan telah melewati fase eksperimental. Drone otonom, sistem penargetan berbasis machine learning, dan command & control yang diperkuat AI kini menjadi realitas di beberapa konflik aktif. Artikel ini menganalisis implikasi strategis dan etika dari revolusi peperangan otonom."
+  }
+];
+
+let currentCat = 'all';
+let currentSearch = '';
+
+// ===== RENDER ARTICLES =====
+function renderArticles() {
+  const grid = document.getElementById('article-grid');
+  const filtered = articles.filter(a => {
+    const catMatch = currentCat === 'all' || a.cat === currentCat;
+    const searchMatch = currentSearch === '' ||
+      a.title.toLowerCase().includes(currentSearch.toLowerCase()) ||
+      a.excerpt.toLowerCase().includes(currentSearch.toLowerCase());
+    return catMatch && searchMatch;
+  });
+
+  if (filtered.length === 0) {
+    grid.innerHTML = `<div style="padding:40px;text-align:center;color:rgba(0,255,136,0.4);font-size:12px;letter-spacing:3px;grid-column:1/-1">// TIDAK ADA ARTIKEL DITEMUKAN</div>`;
+    return;
+  }
+
+  grid.innerHTML = filtered.map((a, i) => {
+    if (a.featured && currentCat === 'all' && currentSearch === '' && i === 0) {
+      return `
+        <div class="article-card featured-card" onclick="openModal(${a.id})" style="animation:fadeUp 0.6s ${i*0.07}s both">
+          <div class="featured-visual">
+            <span>${a.icon}</span>
+            <div class="corner-tl"></div>
+            <div class="corner-br"></div>
+          </div>
+          <div class="featured-content">
+            <div class="featured-badge">★ ARTIKEL UNGGULAN</div>
+            <div class="card-top" style="margin-bottom:12px">
+              <span class="card-cat">${a.tag}</span>
+              <span class="card-level level-${a.level}">${a.levelLabel}</span>
+            </div>
+            <div class="card-title" style="font-size:17px;margin-bottom:12px">${a.title}</div>
+            <div class="card-excerpt">${a.excerpt}</div>
+            <div class="card-footer"><span>${a.date}</span><span>⏱ ${a.read}</span></div>
+          </div>
+        </div>`;
+    }
+    return `
+      <div class="article-card" onclick="openModal(${a.id})" style="animation:fadeUp 0.6s ${i*0.07}s both">
+        <div class="card-top">
+          <span class="card-cat">${a.tag}</span>
+          <span class="card-level level-${a.level}">${a.levelLabel}</span>
+        </div>
+        <div class="card-title">${a.title}</div>
+        <div class="card-excerpt">${a.excerpt}</div>
+        <div class="card-footer"><span>${a.date}</span><span>⏱ ${a.read}</span></div>
+      </div>`;
+  }).join('');
+}
+
+// ===== FILTER =====
+function filterCat(cat, el) {
+  currentCat = cat;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  renderArticles();
+}
+
+function filterSearch(val) {
+  currentSearch = val;
+  renderArticles();
+}
+
+// ===== MODAL =====
+function openModal(id) {
+  const a = articles.find(x => x.id === id);
+  if (!a) return;
+  document.getElementById('modal-header').innerHTML = `
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px">
+      <span class="card-cat">${a.tag}</span>
+      <span class="card-level level-${a.level}">${a.levelLabel}</span>
+    </div>
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:#fff;line-height:1.3;margin-bottom:10px">${a.title}</div>
+    <div style="font-size:10px;color:rgba(0,255,136,0.45);letter-spacing:2px">${a.date} · ${a.read} baca</div>`;
+  document.getElementById('modal-body').innerHTML = `
+    <p style="font-size:13px;line-height:1.9;color:rgba(180,200,220,0.8);margin-bottom:20px">${a.excerpt}</p>
+    <div style="height:1px;background:rgba(0,255,136,0.1);margin-bottom:20px"></div>
+    <p style="font-size:13px;line-height:1.9;color:rgba(180,200,220,0.7)">${a.body}</p>
+    <div style="margin-top:24px;padding:16px;border:1px solid rgba(0,255,136,0.1);background:rgba(0,255,136,0.02)">
+      <span style="font-size:9px;letter-spacing:3px;color:rgba(0,255,136,0.5)">// ARTIKEL LENGKAP TERSEDIA DI EDISI PREMIUM BLACKSYNC</span>
+    </div>`;
+  document.getElementById('modal-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('modal-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ===== NAV ACTIVE =====
+function setActive(el) {
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+}
+
+// ===== DATE / CLOCK =====
+function updateClock() {
+  const now = new Date();
+  const days = ['MINGGU','SENIN','SELASA','RABU','KAMIS','JUMAT','SABTU'];
+  const months = ['JAN','FEB','MAR','APR','MEI','JUN','JUL','AGS','SEP','OKT','NOV','DES'];
+  document.getElementById('date-str').textContent =
+    `${days[now.getDay()]}, ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+  const t = `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
+  document.getElementById('clock-ft').textContent = t;
+}
+
+// ===== COUNTER ANIMATION =====
+function animateCounter(id, target, suffix='', duration=1800) {
+  const el = document.getElementById(id);
+  let start = 0;
+  const step = target / (duration / 16);
+  const timer = setInterval(() => {
+    start += step;
+    if (start >= target) { el.textContent = target + suffix; clearInterval(timer); }
+    else { el.textContent = Math.floor(start) + suffix; }
+  }, 16);
+}
+
+// ===== GLITCH =====
+function startGlitch() {
+  const el = document.getElementById('logo-glitch');
+  setInterval(() => {
+    el.style.animation = 'glitch 0.15s';
+    setTimeout(() => el.style.animation = '', 200);
+  }, 5000);
+}
+
+// ===== INIT =====
+renderArticles();
+updateClock();
+setInterval(updateClock, 1000);
+startGlitch();
+
+// Counter trigger on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCounter('c1', 200, '+');
+      animateCounter('c2', 7, '');
+      animateCounter('c3', 48000, '+');
+      animateCounter('c4', 24, '');
+      observer.disconnect();
+    }
+  });
+}, { threshold: 0.3 });
+observer.observe(document.querySelector('.stats-row'));
+</script>
+</body>
+</html>
