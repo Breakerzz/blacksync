@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emas, Vault, dan Singapura: Pusat Baru Penyimpanan Kekayaan Dunia</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,400&family=Merriweather+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Merriweather', Georgia, serif;
+    font-size: 11pt;
+    line-height: 1.85;
+    color: #1a1a2e;
+    background: #fdf6e3;
+  }
+
+  .page {
+    max-width: 800px;
+    margin: 0 auto;
+    background: #fff;
+    padding: 60px 70px;
+    box-shadow: 0 4px 40px rgba(0,0,0,0.10);
+  }
+
+  /* HEADER */
+  .header-band {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    margin: -60px -70px 0 -70px;
+    padding: 50px 70px 40px 70px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-band::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    background: rgba(212,175,55,0.12);
+  }
+  .header-band::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: 40px;
+    width: 140px; height: 140px;
+    border-radius: 50%;
+    background: rgba(212,175,55,0.08);
+  }
+  .header-tag {
+    display: inline-block;
+    background: #d4af37;
+    color: #1a1a2e;
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 3px;
+    margin-bottom: 16px;
+  }
+  .main-title {
+    font-size: 22pt;
+    font-weight: 900;
+    line-height: 1.25;
+    color: #fff;
+    margin-bottom: 10px;
+  }
+  .main-title span { color: #d4af37; }
+  .subtitle {
+    font-size: 11pt;
+    font-weight: 300;
+    color: #a0aec0;
+    font-style: italic;
+  }
+
+  /* SECTION LABELS */
+  .section-label {
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 8pt;
+    font-weight: 700;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #d4af37;
+    margin: 40px 0 6px 0;
+  }
+
+  h2 {
+    font-size: 14pt;
+    font-weight: 700;
+    color: #0f3460;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #e8e0c8;
+  }
+
+  h3 {
+    font-size: 11.5pt;
+    font-weight: 700;
+    color: #1a1a2e;
+    margin: 22px 0 8px 0;
+  }
+
+  p {
+    text-align: justify;
+    margin-bottom: 14px;
+    color: #2d3748;
+  }
+
+  /* INTRO BOX */
+  .intro-box {
+    background: linear-gradient(135deg, #fef9ec, #fdf3d0);
+    border-left: 4px solid #d4af37;
+    border-radius: 0 8px 8px 0;
+    padding: 20px 24px;
+    margin: 28px 0;
+  }
+  .intro-box p {
+    margin: 0;
+    font-style: italic;
+    color: #744210;
+    font-size: 10.5pt;
+  }
+
+  /* GOLD PRICE BANNER */
+  .price-banner {
+    display: flex;
+    gap: 16px;
+    margin: 28px 0;
+    flex-wrap: wrap;
+  }
+  .price-card {
+    flex: 1;
+    min-width: 160px;
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    border-radius: 10px;
+    padding: 18px 20px;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+  }
+  .price-card::after {
+    content: '';
+    position: absolute;
+    top: -20px; right: -20px;
+    width: 70px; height: 70px;
+    border-radius: 50%;
+    background: rgba(212,175,55,0.15);
+  }
+  .price-card .metal { font-family: 'Merriweather Sans', sans-serif; font-size: 8pt; letter-spacing: 2px; text-transform: uppercase; color: #d4af37; margin-bottom: 6px; }
+  .price-card .price { font-size: 18pt; font-weight: 900; color: #fff; }
+  .price-card .unit { font-size: 8pt; color: #a0aec0; margin-top: 3px; }
+  .price-card .icon { font-size: 24pt; margin-bottom: 8px; }
+
+  /* SVG ILLUSTRATION WRAPPER */
+  .illustration {
+    margin: 28px 0;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  }
+  .illustration figcaption {
+    background: #1a1a2e;
+    color: #a0aec0;
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 8.5pt;
+    padding: 10px 18px;
+    text-align: center;
+    font-style: italic;
+  }
+
+  /* TABLE */
+  .styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 24px 0;
+    font-size: 10pt;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  }
+  .styled-table thead tr {
+    background: linear-gradient(135deg, #1a1a2e, #0f3460);
+    color: #fff;
+  }
+  .styled-table thead th {
+    padding: 13px 16px;
+    text-align: left;
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 9pt;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .styled-table tbody tr:nth-child(even) { background: #f8f5ee; }
+  .styled-table tbody tr:nth-child(odd) { background: #fff; }
+  .styled-table tbody tr:hover { background: #fef9ec; }
+  .styled-table td {
+    padding: 11px 16px;
+    border-bottom: 1px solid #e8e0c8;
+    vertical-align: top;
+    color: #2d3748;
+  }
+  .styled-table td:first-child { font-weight: 700; color: #0f3460; }
+  .badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 20px;
+    font-size: 8.5pt;
+    font-family: 'Merriweather Sans', sans-serif;
+    font-weight: 600;
+  }
+  .badge-gold { background: #fef3c7; color: #92400e; }
+  .badge-blue { background: #dbeafe; color: #1e40af; }
+  .badge-green { background: #d1fae5; color: #065f46; }
+  .badge-red { background: #fee2e2; color: #991b1b; }
+
+  /* CALLOUT BOX */
+  .callout {
+    display: flex;
+    gap: 16px;
+    background: #f0f4ff;
+    border: 1px solid #c7d2fe;
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin: 24px 0;
+    align-items: flex-start;
+  }
+  .callout-icon { font-size: 22pt; flex-shrink: 0; }
+  .callout-text { font-size: 10.5pt; color: #1e3a8a; }
+  .callout-text strong { display: block; margin-bottom: 4px; font-family: 'Merriweather Sans', sans-serif; }
+
+  .callout-warn {
+    background: #fffbeb;
+    border-color: #fcd34d;
+  }
+  .callout-warn .callout-text { color: #78350f; }
+
+  /* CONCLUSION */
+  .conclusion {
+    background: linear-gradient(135deg, #1a1a2e 0%, #0f3460 100%);
+    margin: 40px -70px -60px -70px;
+    padding: 40px 70px 50px 70px;
+    color: #fff;
+  }
+  .conclusion h2 { color: #d4af37; border-color: rgba(212,175,55,0.3); }
+  .conclusion p { color: #cbd5e1; text-align: justify; }
+  .conclusion .key-points {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-top: 20px;
+  }
+  .key-point {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(212,175,55,0.25);
+    border-radius: 8px;
+    padding: 14px 16px;
+  }
+  .key-point .kp-num {
+    font-family: 'Merriweather Sans', sans-serif;
+    font-size: 20pt;
+    font-weight: 700;
+    color: #d4af37;
+    opacity: 0.5;
+    line-height: 1;
+  }
+  .key-point .kp-text {
+    font-size: 10pt;
+    color: #e2e8f0;
+    margin: 0;
+    text-align: left;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #d4af37, transparent);
+    margin: 32px 0;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header-band">
+    <div class="header-tag">&#128218; Artikel Pembelajaran</div>
+    <h1 class="main-title">Emas, Vault &amp; Singapura:<br><span>Pusat Baru Penyimpanan Kekayaan Dunia</span></h1>
+    <p class="subtitle">Memahami tren investasi emas global dan pergeseran geopolitik penyimpanan aset</p>
+  </div>
+
+  <!-- PENDAHULUAN -->
+  <div class="section-label">&#9670; Pendahuluan</div>
+  <h2>Mengapa Emas Kembali Menjadi Sorotan?</h2>
+
+  <div class="intro-box">
+    <p>"Dalam situasi ketidakpastian global, investor cenderung kembali ke aset yang telah bertahan ribuan tahun: emas. Namun kini, pertanyaannya bukan hanya seberapa banyak emas yang dimiliki, melainkan juga di mana menyimpannya dengan aman."</p>
+  </div>
+
+  <p>Harga emas secara historis bergerak naik ketika kondisi ekonomi dan geopolitik dunia tidak stabil. Tren ini kembali terjadi belakangan ini, dengan harga emas melampaui <strong>$4.000 per troy ounce</strong> untuk pertama kalinya dalam sejarah. Fenomena ini mendorong para investor kaya dunia untuk tidak hanya membeli lebih banyak emas, tetapi juga memikirkan ulang di mana mereka menyimpan aset berharga tersebut.</p>
+
+  <p>Pergeseran yang terjadi cukup signifikan: dari pusat-pusat penyimpanan tradisional di Barat seperti London dan Jenewa, kini investor mulai melirik kawasan Timur, khususnya <strong>Singapura</strong>, sebagai lokasi penyimpanan emas jangka panjang. Artikel ini mengupas alasan di balik pergeseran tersebut, cara kerja fasilitas penyimpanan emas modern, serta berbagai faktor yang memengaruhi keputusan investasi emas secara global.</p>
+
+  <!-- HARGA EMAS -->
+  <div class="section-label">&#9670; Data Harga Terkini</div>
+  <h2>Rekor Harga Emas dan Perak Dunia</h2>
+
+  <div class="price-banner">
+    <div class="price-card">
+      <div class="icon">&#129752;</div>
+      <div class="metal">Emas (Gold)</div>
+      <div class="price">$4.300+</div>
+      <div class="unit">per troy ounce (rekor tertinggi)</div>
+    </div>
+    <div class="price-card">
+      <div class="icon">&#129669;</div>
+      <div class="metal">Perak (Silver)</div>
+      <div class="price">$53+</div>
+      <div class="unit">per troy ounce (rekor tertinggi)</div>
+    </div>
+    <div class="price-card">
+      <div class="icon">&#128200;</div>
+      <div class="metal">Perdagangan Harian</div>
+      <div class="price">$100B+</div>
+      <div class="unit">emas diperdagangkan di London/hari</div>
+    </div>
+  </div>
+
+  <p>Kedua logam mulia tersebut mencatat rekor harga pada Oktober 2024. Lonjakan ini bukan semata-mata spekulasi pasar, melainkan mencerminkan kekhawatiran nyata terhadap nilai mata uang fiat, ketidakstabilan geopolitik, dan potensi krisis keuangan sistemik.</p>
+
+  <!-- VAULT SINGAPURA -->
+  <div class="divider"></div>
+  <div class="section-label">&#9670; Fasilitas Penyimpanan</div>
+  <h2>Vault Modern di Singapura: Lebih dari Sekadar Gudang</h2>
+
+  <!-- SVG ILLUSTRATION 1: Vault Cross-section -->
+  <figure class="illustration">
+    <svg viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;">
+      <defs>
+        <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#1a1a2e"/>
+          <stop offset="100%" style="stop-color:#0f3460"/>
+        </linearGradient>
+        <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#f6d365"/>
+          <stop offset="100%" style="stop-color:#d4af37"/>
+        </linearGradient>
+        <linearGradient id="steelGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#8a9bb0"/>
+          <stop offset="100%" style="stop-color:#4a5568"/>
+        </linearGradient>
+        <linearGradient id="groundGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#6b4226"/>
+          <stop offset="100%" style="stop-color:#3d2b1f"/>
+        </linearGradient>
+        <filter id="glow">
+          <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+          <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- Background -->
+      <rect width="760" height="340" fill="url(#bgGrad)"/>
+      <!-- Stars -->
+      <circle cx="50" cy="30" r="1.5" fill="white" opacity="0.4"/>
+      <circle cx="130" cy="20" r="1" fill="white" opacity="0.3"/>
+      <circle cx="680" cy="15" r="1.5" fill="white" opacity="0.4"/>
+      <circle cx="720" cy="40" r="1" fill="white" opacity="0.3"/>
+      <circle cx="600" cy="25" r="1.5" fill="white" opacity="0.4"/>
+
+      <!-- GROUND LINE -->
+      <rect x="0" y="180" width="760" height="5" fill="#d4af37" opacity="0.5"/>
+      <!-- Ground Layer -->
+      <rect x="0" y="185" width="760" height="155" fill="url(#groundGrad)" opacity="0.8"/>
+
+      <!-- Ground texture lines -->
+      <line x1="0" y1="210" x2="760" y2="210" stroke="#5a3a20" stroke-width="0.5" opacity="0.5"/>
+      <line x1="0" y1="240" x2="760" y2="240" stroke="#5a3a20" stroke-width="0.5" opacity="0.5"/>
+      <line x1="0" y1="270" x2="760" y2="270" stroke="#5a3a20" stroke-width="0.5" opacity="0.5"/>
+      <line x1="0" y1="300" x2="760" y2="300" stroke="#5a3a20" stroke-width="0.5" opacity="0.5"/>
+
+      <!-- BUILDING EXTERIOR (above ground) -->
+      <rect x="240" y="60" width="280" height="120" rx="4" fill="#2a3a5e"/>
+      <rect x="240" y="56" width="280" height="8" rx="2" fill="#d4af37" opacity="0.7"/>
+      <!-- Building windows -->
+      <rect x="260" y="80" width="30" height="20" rx="2" fill="#7eb8f7" opacity="0.7"/>
+      <rect x="310" y="80" width="30" height="20" rx="2" fill="#7eb8f7" opacity="0.7"/>
+      <rect x="360" y="80" width="30" height="20" rx="2" fill="#7eb8f7" opacity="0.4"/>
+      <rect x="410" y="80" width="30" height="20" rx="2" fill="#7eb8f7" opacity="0.7"/>
+      <rect x="460" y="80" width="30" height="20" rx="2" fill="#7eb8f7" opacity="0.7"/>
+      <rect x="260" y="120" width="30" height="20" rx="2" fill="#7eb8f7" opacity="0.5"/>
+      <rect x="310" y="120" width="30" height="20" rx="2" fill="#7eb8f7" opacity="0.7"/>
+      <rect x="360" y="120" width="30" height="20" rx="2" fill="#d4af37" opacity="0.6"/>
+      <rect x="410" y="120" width="30" height="20" rx="2" fill="#7eb8f7" opacity="0.5"/>
+      <rect x="460" y="120" width="30" height="20" rx="2" fill="#7eb8f7" opacity="0.7"/>
+      <!-- Building label -->
+      <text x="380" y="165" font-family="sans-serif" font-size="9" fill="#d4af37" text-anchor="middle" font-weight="bold">THE RESERVE — SINGAPORE</text>
+
+      <!-- FOUNDATION PILLARS (going deep) -->
+      <!-- Pillar 1 -->
+      <rect x="290" y="180" width="20" height="145" rx="4" fill="url(#steelGrad)" opacity="0.8"/>
+      <!-- Pillar 2 -->
+      <rect x="370" y="180" width="20" height="145" rx="4" fill="url(#steelGrad)" opacity="0.8"/>
+      <!-- Pillar 3 -->
+      <rect x="450" y="180" width="20" height="145" rx="4" fill="url(#steelGrad)" opacity="0.8"/>
+
+      <!-- UNDERGROUND VAULT CHAMBER -->
+      <rect x="260" y="200" width="240" height="110" rx="8" fill="#1e3a5f" stroke="#d4af37" stroke-width="1.5" opacity="0.95"/>
+      <!-- Vault floor -->
+      <rect x="260" y="295" width="240" height="15" rx="4" fill="#4a5568" opacity="0.8"/>
+
+      <!-- GOLD BARS inside vault -->
+      <rect x="280" y="220" width="24" height="14" rx="2" fill="url(#goldGrad)" filter="url(#glow)"/>
+      <rect x="280" y="237" width="24" height="14" rx="2" fill="url(#goldGrad)" filter="url(#glow)"/>
+      <rect x="280" y="254" width="24" height="14" rx="2" fill="url(#goldGrad)" filter="url(#glow)"/>
+
+      <rect x="312" y="220" width="24" height="14" rx="2" fill="url(#goldGrad)" filter="url(#glow)"/>
+      <rect x="312" y="237" width="24" height="14" rx="2" fill="url(#goldGrad)" filter="url(#glow)"/>
+      <rect x="312" y="254" width="24" height="14" rx="2" fill="url(#goldGrad)" filter="url(#glow)"/>
+
+      <rect x="344" y="220" width="24" height="14" rx="2" fill="url(#goldGrad)" filter="url(#glow)"/>
+      <rect x="344" y="237" width="24" height="14" rx="2" fill="url(#goldGrad)" filter="url(#glow)"/>
+      <rect x="344" y="254" width="24" height="14" rx="2" fill="url(#goldGrad)" filter="url(#glow)"/>
+
+      <rect x="376" y="220" width="24" height="14" rx="2" fill="url(#goldGrad)" filter="url(#glow)"/>
+      <rect x="376" y="237" width="24" height="14" rx="2" fill="url(#goldGrad)" filter="url(#glow)"/>
+      <rect x="376" y="254" width="24" height="14" rx="2" fill="url(#goldGrad)" filter="url(#glow)"/>
+
+      <rect x="408" y="220" width="24" height="14" rx="2" fill="url(#goldGrad)" filter="url(#glow)"/>
+      <rect x="408" y="237" width="24" height="14" rx="2" fill="url(#goldGrad)" filter="url(#glow)"/>
+      <rect x="408" y="254" width="24" height="14" rx="2" fill="url(#goldGrad)" filter="url(#glow)"/>
+
+      <!-- Vault door indicator -->
+      <rect x="440" y="210" width="50" height="80" rx="4" fill="#2d4a7a" stroke="#d4af37" stroke-width="2"/>
+      <circle cx="465" cy="250" r="12" fill="none" stroke="#d4af37" stroke-width="2"/>
+      <line x1="465" y1="238" x2="465" y2="244" stroke="#d4af37" stroke-width="2"/>
+      <line x1="465" y1="256" x2="465" y2="262" stroke="#d4af37" stroke-width="2"/>
+      <line x1="453" y1="250" x2="459" y2="250" stroke="#d4af37" stroke-width="2"/>
+      <line x1="471" y1="250" x2="477" y2="250" stroke="#d4af37" stroke-width="2"/>
+      <text x="465" y="305" font-family="sans-serif" font-size="7.5" fill="#d4af37" text-anchor="middle">VAULT DOOR</text>
+
+      <!-- MEASUREMENT: 32m depth arrow -->
+      <line x1="220" y1="180" x2="220" y2="325" stroke="#d4af37" stroke-width="1" stroke-dasharray="4,3"/>
+      <polygon points="220,178 216,186 224,186" fill="#d4af37"/>
+      <polygon points="220,327 216,319 224,319" fill="#d4af37"/>
+      <text x="208" y="257" font-family="sans-serif" font-size="9" fill="#d4af37" text-anchor="middle" transform="rotate(-90,208,257)">Fondasi 32 m</text>
+
+      <!-- LABELS -->
+      <text x="560" y="100" font-family="sans-serif" font-size="9" fill="#a0c4ff">Gedung di atas tanah</text>
+      <line x1="520" y1="100" x2="520" y2="100" stroke="#a0c4ff" stroke-width="0.5"/>
+
+      <text x="570" y="250" font-family="sans-serif" font-size="9" fill="#d4af37">Ruang vault emas</text>
+      <text x="570" y="262" font-family="sans-serif" font-size="9" fill="#d4af37">kapasitas 500 ton</text>
+      <line x1="502" y1="255" x2="568" y2="255" stroke="#d4af37" stroke-width="0.8" stroke-dasharray="3,2"/>
+
+      <text x="60" y="220" font-family="sans-serif" font-size="9" fill="#a09070">Lapisan tanah</text>
+      <text x="60" y="235" font-family="sans-serif" font-size="9" fill="#a09070">&amp; bebatuan</text>
+
+      <!-- Floor loading label -->
+      <text x="380" y="318" font-family="sans-serif" font-size="8" fill="#94a3b8" text-anchor="middle">Kekuatan lantai: 90 kN/m&#178; — 45x lebih kuat dari parkir biasa</text>
+    </svg>
+    <figcaption>Ilustrasi konseptual: Penampang vault The Reserve, Singapura — fondasi mencapai kedalaman 32 meter dengan kapasitas penyimpanan 500 ton emas</figcaption>
+  </figure>
+
+  <p>Salah satu vault paling canggih di Singapura adalah <strong>The Reserve</strong>, yang berlokasi dekat Bandara Changi dan selesai dibangun pada tahun 2024. Fasilitas ini didirikan oleh Gregor Gregerson untuk memenuhi permintaan yang terus meningkat atas penyimpanan logam mulia berkelas tinggi.</p>
+
+  <h3>Spesifikasi Teknis Vault</h3>
+
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Spesifikasi</th>
+        <th>Detail</th>
+        <th>Keterangan</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Kapasitas Emas</td>
+        <td>500 ton</td>
+        <td>Senilai ±$64 miliar</td>
+      </tr>
+      <tr>
+        <td>Kapasitas Perak</td>
+        <td>10.000 ton</td>
+        <td>Senilai ±$16 miliar</td>
+      </tr>
+      <tr>
+        <td>Kedalaman Fondasi</td>
+        <td>32 meter</td>
+        <td>Untuk distribusi beban ekstrem</td>
+      </tr>
+      <tr>
+        <td>Kekuatan Lantai</td>
+        <td>90 kN/m&#178;</td>
+        <td>±45× lebih kuat dari parkir mobil</td>
+      </tr>
+      <tr>
+        <td>Standar Keamanan</td>
+        <td>UL Class 2 Gold Vault</td>
+        <td>Tahan penetrasi selama &ge;1 jam</td>
+      </tr>
+      <tr>
+        <td>Lokasi</td>
+        <td>Dekat Changi Airport</td>
+        <td>Akses logistik internasional terbaik</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <span class="callout-icon">&#128274;</span>
+    <div class="callout-text">
+      <strong>Standar Keamanan UL Class 2</strong>
+      Vault berlabel UL Class 2 dirancang untuk menahan upaya penetrasi paksa selama minimal satu jam. Ini penting karena dalam konteks keamanan vault, adanya "elemen penundaan" memberi cukup waktu bagi otoritas keamanan untuk merespons sebelum pelaku berhasil masuk.
+    </div>
+  </div>
+
+  <!-- JENIS EMAS -->
+  <div class="divider"></div>
+  <div class="section-label">&#9670; Jenis Aset</div>
+  <h2>Jenis-Jenis Batangan Emas yang Disimpan</h2>
+
+  <!-- SVG ILLUSTRATION 2: Gold Bar Sizes -->
+  <figure class="illustration">
+    <svg viewBox="0 0 760 230" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;">
+      <defs>
+        <linearGradient id="bg2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#0d1b2a"/>
+          <stop offset="100%" style="stop-color:#1a2f4a"/>
+        </linearGradient>
+        <linearGradient id="bar1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#f9e48a"/>
+          <stop offset="50%" style="stop-color:#d4af37"/>
+          <stop offset="100%" style="stop-color:#b8860b"/>
+        </linearGradient>
+        <linearGradient id="barSmall" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#f6d365"/>
+          <stop offset="50%" style="stop-color:#c9a227"/>
+          <stop offset="100%" style="stop-color:#a07818"/>
+        </linearGradient>
+        <linearGradient id="barTop" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#fef3aa"/>
+          <stop offset="100%" style="stop-color:#e8c84a"/>
+        </linearGradient>
+        <linearGradient id="barSmTop" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" style="stop-color:#fef3aa"/>
+          <stop offset="100%" style="stop-color:#e0c040"/>
+        </linearGradient>
+      </defs>
+      <rect width="760" height="230" fill="url(#bg2)"/>
+
+      <!-- LABEL: Good Delivery Bar -->
+      <text x="180" y="35" font-family="sans-serif" font-size="12" fill="#d4af37" text-anchor="middle" font-weight="bold">Good Delivery Bar</text>
+      <text x="180" y="52" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Standar bank sentral &amp; trader besar</text>
+
+      <!-- 3D Big Gold Bar -->
+      <!-- side face (dark) -->
+      <polygon points="100,80 240,80 255,65 115,65" fill="#a07818"/>
+      <!-- front face -->
+      <rect x="100" y="80" width="140" height="90" rx="4" fill="url(#bar1)"/>
+      <!-- top face -->
+      <polygon points="100,80 240,80 255,65 115,65" fill="url(#barTop)"/>
+      <!-- right face -->
+      <polygon points="240,80 255,65 255,155 240,170" fill="#b8860b"/>
+      <!-- bottom edge -->
+      <polygon points="100,170 240,170 255,155 115,155" fill="#8a6a08"/>
+      <!-- engraving lines -->
+      <rect x="112" y="95" width="116" height="60" rx="2" fill="none" stroke="#f9e48a" stroke-width="0.8" opacity="0.6"/>
+      <text x="170" y="122" font-family="sans-serif" font-size="10" fill="#fef3aa" text-anchor="middle" font-weight="bold">400 oz</text>
+      <text x="170" y="138" font-family="sans-serif" font-size="8" fill="#f6d365" text-anchor="middle">&#8776; 12.4 kg</text>
+
+      <!-- Stats below -->
+      <text x="180" y="195" font-family="sans-serif" font-size="10" fill="#d4af37" text-anchor="middle">400 troy oz</text>
+      <text x="180" y="210" font-family="sans-serif" font-size="9" fill="#64748b" text-anchor="middle">Harga: ±$1.600.000</text>
+
+      <!-- DIVIDER LINE -->
+      <line x1="340" y1="50" x2="340" y2="200" stroke="#d4af37" stroke-width="0.5" opacity="0.3"/>
+
+      <!-- LABEL: Small Investment Bar -->
+      <text x="560" y="35" font-family="sans-serif" font-size="12" fill="#d4af37" text-anchor="middle" font-weight="bold">Small Investment Bar</text>
+      <text x="560" y="52" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Pilihan umum investor individu</text>
+
+      <!-- 3D Small Gold Bars (stack of 3) -->
+      <!-- Bar 3 (bottom) -->
+      <polygon points="460,145 560,145 572,133 472,133" fill="#a07818"/>
+      <rect x="460" y="145" width="100" height="46" rx="3" fill="url(#barSmall)"/>
+      <polygon points="560,145 572,133 572,191 560,191" fill="#b8860b"/>
+      <!-- Bar 2 (middle) -->
+      <polygon points="460,112 560,112 572,100 472,100" fill="#a07818" opacity="0.95"/>
+      <rect x="460" y="112" width="100" height="35" rx="3" fill="url(#barSmall)" opacity="0.95"/>
+      <polygon points="560,112 572,100 572,147 560,147" fill="#b8860b" opacity="0.95"/>
+      <!-- Bar 1 (top) -->
+      <polygon points="460,78 560,78 572,66 472,66" fill="#c9a227"/>
+      <rect x="460" y="78" width="100" height="35" rx="3" fill="url(#barSmall)"/>
+      <polygon points="560,78 572,66 572,113 560,113" fill="#b8860b"/>
+      <!-- top surface -->
+      <polygon points="460,78 560,78 572,66 472,66" fill="url(#barSmTop)" opacity="0.9"/>
+      <!-- engraving -->
+      <rect x="472" y="86" width="76" height="18" rx="1.5" fill="none" stroke="#f9e48a" stroke-width="0.7" opacity="0.5"/>
+      <text x="510" y="99" font-family="sans-serif" font-size="9" fill="#fef3aa" text-anchor="middle">32 oz</text>
+
+      <!-- Stats below -->
+      <text x="560" y="208" font-family="sans-serif" font-size="10" fill="#d4af37" text-anchor="middle">32 troy oz per batang</text>
+      <text x="560" y="220" font-family="sans-serif" font-size="9" fill="#64748b" text-anchor="middle">Harga: ±$128.000 per batang</text>
+
+      <!-- vs label -->
+      <text x="380" y="130" font-family="sans-serif" font-size="14" fill="#475569" text-anchor="middle" font-weight="bold">VS</text>
+    </svg>
+    <figcaption>Perbandingan ukuran batangan emas: Good Delivery Bar (standar bank sentral) vs. Small Investment Bar (pilihan investor individu)</figcaption>
+  </figure>
+
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Jenis Batangan</th>
+        <th>Berat</th>
+        <th>Harga Estimasi</th>
+        <th>Pengguna Utama</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Good Delivery Bar</td>
+        <td>400 troy oz (~12,4 kg)</td>
+        <td>±$1,6 juta</td>
+        <td><span class="badge badge-blue">Bank Sentral</span> <span class="badge badge-blue">Trader Besar</span></td>
+      </tr>
+      <tr>
+        <td>Small Investment Bar</td>
+        <td>32 troy oz (~1 kg)</td>
+        <td>±$128.000</td>
+        <td><span class="badge badge-green">Investor Individu</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- MENGAPA SINGAPURA -->
+  <div class="divider"></div>
+  <div class="section-label">&#9670; Analisis Lokasi</div>
+  <h2>Mengapa Singapura? Tiga Faktor Utama</h2>
+
+  <p>Pergeseran preferensi penyimpanan emas dari pusat-pusat tradisional di Eropa ke Singapura bukan terjadi secara kebetulan. Terdapat tiga faktor fundamental yang menjadikan Singapura pilihan ideal untuk penyimpanan kekayaan jangka panjang.</p>
+
+  <!-- SVG ILLUSTRATION 3: 3 Pillars -->
+  <figure class="illustration">
+    <svg viewBox="0 0 760 240" xmlns="http://www.w3.org/2000/svg" style="display:block;width:100%;">
+      <defs>
+        <linearGradient id="pillBg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#0d1b2a"/>
+          <stop offset="100%" style="stop-color:#162032"/>
+        </linearGradient>
+        <linearGradient id="pil1" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#3b82f6"/>
+          <stop offset="100%" style="stop-color:#1d4ed8"/>
+        </linearGradient>
+        <linearGradient id="pil2" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#10b981"/>
+          <stop offset="100%" style="stop-color:#047857"/>
+        </linearGradient>
+        <linearGradient id="pil3" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style="stop-color:#f59e0b"/>
+          <stop offset="100%" style="stop-color:#b45309"/>
+        </linearGradient>
+      </defs>
+      <rect width="760" height="240" fill="url(#pillBg)"/>
+      <!-- Base platform -->
+      <rect x="60" y="190" width="640" height="18" rx="4" fill="#1e3a5f"/>
+      <rect x="50" y="205" width="660" height="8" rx="3" fill="#0f2a4a"/>
+
+      <!-- Pillar 1: GEOPOLITICAL -->
+      <rect x="100" y="80" width="140" height="112" rx="6" fill="url(#pil1)"/>
+      <polygon points="100,80 240,80 220,60 120,60" fill="#60a5fa" opacity="0.8"/>
+      <text x="170" y="50" font-family="sans-serif" font-size="11" fill="#93c5fd" text-anchor="middle" font-weight="bold">&#127757;</text>
+      <text x="170" y="115" font-family="sans-serif" font-size="11" fill="#fff" text-anchor="middle" font-weight="bold">Geopolitik</text>
+      <text x="170" y="132" font-family="sans-serif" font-size="9" fill="#bfdbfe" text-anchor="middle">Tidak punya musuh</text>
+      <text x="170" y="147" font-family="sans-serif" font-size="9" fill="#bfdbfe" text-anchor="middle">di dunia</text>
+      <text x="170" y="168" font-family="sans-serif" font-size="9" fill="#93c5fd" text-anchor="middle" font-style="italic">"Sangat aman untuk</text>
+      <text x="170" y="181" font-family="sans-serif" font-size="9" fill="#93c5fd" text-anchor="middle" font-style="italic">simpanan generasional"</text>
+
+      <!-- Pillar 2: LEGAL -->
+      <rect x="310" y="60" width="140" height="132" rx="6" fill="url(#pil2)"/>
+      <polygon points="310,60 450,60 430,40 330,40" fill="#34d399" opacity="0.8"/>
+      <text x="380" y="30" font-family="sans-serif" font-size="11" fill="#6ee7b7" text-anchor="middle" font-weight="bold">&#9878;</text>
+      <text x="380" y="100" font-family="sans-serif" font-size="11" fill="#fff" text-anchor="middle" font-weight="bold">Kepercayaan</text>
+      <text x="380" y="117" font-family="sans-serif" font-size="11" fill="#fff" text-anchor="middle" font-weight="bold">Hukum</text>
+      <text x="380" y="136" font-family="sans-serif" font-size="9" fill="#a7f3d0" text-anchor="middle">Tidak ada insentif</text>
+      <text x="380" y="151" font-family="sans-serif" font-size="9" fill="#a7f3d0" text-anchor="middle">nasionalisasi aset</text>
+      <text x="380" y="172" font-family="sans-serif" font-size="9" fill="#6ee7b7" text-anchor="middle" font-style="italic">"Nasionalisasi = bunuh</text>
+      <text x="380" y="185" font-family="sans-serif" font-size="9" fill="#6ee7b7" text-anchor="middle" font-style="italic">diri ekonomi"</text>
+
+      <!-- Pillar 3: DEFENSE -->
+      <rect x="520" y="80" width="140" height="112" rx="6" fill="url(#pil3)"/>
+      <polygon points="520,80 660,80 640,60 540,60" fill="#fbbf24" opacity="0.8"/>
+      <text x="590" y="50" font-family="sans-serif" font-size="11" fill="#fde68a" text-anchor="middle" font-weight="bold">&#128737;</text>
+      <text x="590" y="115" font-family="sans-serif" font-size="11" fill="#fff" text-anchor="middle" font-weight="bold">Pertahanan</text>
+      <text x="590" y="132" font-family="sans-serif" font-size="11" fill="#fff" text-anchor="middle" font-weight="bold">Militer</text>
+      <text x="590" y="151" font-family="sans-serif" font-size="9" fill="#fde68a" text-anchor="middle">Sistem pertahanan</text>
+      <text x="590" y="166" font-family="sans-serif" font-size="9" fill="#fde68a" text-anchor="middle">sangat kuat</text>
+      <text x="590" y="184" font-family="sans-serif" font-size="9" fill="#fbbf24" text-anchor="middle" font-style="italic">"Ideal untuk 20–40</text>
+      <text x="590" y="197" font-family="sans-serif" font-size="9" fill="#fbbf24" text-anchor="middle" font-style="italic">tahun ke depan"</text>
+
+      <!-- Foundation label -->
+      <text x="380" y="219" font-family="sans-serif" font-size="9" fill="#64748b" text-anchor="middle">TIGA PILAR KEPERCAYAAN SINGAPURA SEBAGAI PUSAT PENYIMPANAN KEKAYAAN DUNIA</text>
+    </svg>
+    <figcaption>Tiga pilar utama yang menjadikan Singapura lokasi ideal penyimpanan kekayaan jangka panjang: stabilitas geopolitik, kepercayaan hukum, dan kekuatan pertahanan</figcaption>
+  </figure>
+
+  <h3>1. Stabilitas Geopolitik</h3>
+  <p>Singapura dikenal sebagai negara yang tidak memiliki musuh dalam pergaulan internasional. Posisi diplomatisnya yang netral dan hubungan baiknya dengan berbagai kekuatan besar dunia menjadikannya lokasi yang sangat aman untuk penyimpanan aset dalam jangka panjang—bahkan dalam rentang 20 hingga 40 tahun ke depan.</p>
+
+  <h3>2. Kepercayaan Hukum dan Ekonomi</h3>
+  <p>Singapura adalah yurisdiksi kaya yang membangun reputasinya di atas kepercayaan dan kepastian hukum. Nationalisasi aset asing akan menjadi "bunuh diri ekonomi" bagi Singapura, karena hal itu akan langsung menghancurkan kepercayaan yang telah dibangun selama puluhan tahun. Ini memberikan jaminan implisit yang sangat kuat bagi investor asing.</p>
+
+  <h3>3. Kekuatan Pertahanan</h3>
+  <p>Meskipun kecil secara geografis, Singapura memiliki angkatan bersenjata yang sangat modern dan terlatih. Anggaran pertahanannya per kapita termasuk yang tertinggi di Asia, memberikan lapisan perlindungan fisik tambahan bagi aset yang disimpan di wilayahnya.</p>
+
+  <!-- PROFIL INVESTOR -->
+  <div class="divider"></div>
+  <div class="section-label">&#9670; Profil Pasar</div>
+  <h2>Siapa Saja yang Menyimpan Emas di Singapura?</h2>
+
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Karakteristik</th>
+        <th>Keterangan</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Asal Geografis</td>
+        <td>Sebagian besar dari Eropa, Amerika Serikat, dan Australia</td>
+      </tr>
+      <tr>
+        <td>Profil Utama</td>
+        <td>Pengusaha sukses yang mengelola kekayaan secara mandiri</td>
+      </tr>
+      <tr>
+        <td>Tren Terbaru</td>
+        <td>Peningkatan signifikan klien dari Amerika Serikat</td>
+      </tr>
+      <tr>
+        <td>Motivasi Utama</td>
+        <td>Diversifikasi lokasi aset, menghindari risiko regulasi di negara asal</td>
+      </tr>
+      <tr>
+        <td>Cakrawala Investasi</td>
+        <td>Jangka panjang: 20–40 tahun (penyimpanan antargenerasi)</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- MENGAPA EMAS FISIK -->
+  <div class="divider"></div>
+  <div class="section-label">&#9670; Konsep Keuangan</div>
+  <h2>Emas Fisik vs. Instrumen Keuangan Berbasis Emas</h2>
+
+  <p>Salah satu keputusan penting bagi investor emas adalah memilih antara memiliki emas fisik atau berinvestasi melalui instrumen keuangan seperti reksa dana atau kontrak berjangka (<em>futures</em>). Keduanya memiliki profil risiko yang sangat berbeda.</p>
+
+  <div class="callout callout-warn">
+    <span class="callout-icon">&#9888;&#65039;</span>
+    <div class="callout-text">
+      <strong>Risiko Counterparty: Pelajaran dari Krisis 2008</strong>
+      Krisis keuangan global 2008 menunjukkan bahwa bahkan institusi keuangan terbesar pun bisa gagal. Ketika Lehman Brothers dan beberapa bank besar kolaps, angka-angka di layar komputer tiba-tiba kehilangan maknanya. Emas fisik yang dimiliki sebagai properti pribadi tidak mengandung risiko semacam ini.
+    </div>
+  </div>
+
+  <table class="styled-table">
+    <thead>
+      <tr>
+        <th>Aspek</th>
+        <th>Emas Fisik</th>
+        <th>Dana/Futures Emas</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Kepemilikan</td>
+        <td><span class="badge badge-green">Properti pribadi langsung</span></td>
+        <td><span class="badge badge-red">Klaim atas kertas</span></td>
+      </tr>
+      <tr>
+        <td>Risiko Counterparty</td>
+        <td><span class="badge badge-green">Tidak ada</span></td>
+        <td><span class="badge badge-red">Ada (bank/broker bisa gagal)</span></td>
+      </tr>
+      <tr>
+        <td>Likuiditas</td>
+        <td><span class="badge badge-gold">Lebih lambat</span></td>
+        <td><span class="badge badge-green">Sangat tinggi</span></td>
+      </tr>
+      <tr>
+        <td>Biaya Penyimpanan</td>
+        <td><span class="badge badge-red">Ada (sewa vault)</span></td>
+        <td><span class="badge badge-green">Tidak ada</span></td>
+      </tr>
+      <tr>
+        <td>Cocok Untuk</td>
+        <td>Perlindungan sistemik jangka panjang</td>
+        <td>Spekulasi &amp; likuiditas jangka pendek</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- KESIMPULAN -->
+  <div class="conclusion">
+    <div class="section-label" style="color:#d4af37;">&#9670; Kesimpulan</div>
+    <h2>Ringkasan dan Poin Pembelajaran</h2>
+    <p>Lonjakan harga emas hingga di atas $4.000 per troy ounce bukan sekadar fenomena pasar biasa. Ini adalah cerminan dari kekhawatiran mendalam investor global terhadap ketidakstabilan geopolitik, melemahnya kepercayaan pada mata uang fiat, dan risiko sistemik dalam sistem keuangan konvensional. Di tengah kondisi ini, Singapura muncul sebagai pusat penyimpanan emas terkemuka berkat kombinasi unik stabilitas geopolitik, kepastian hukum, dan kekuatan pertahanan.</p>
+
+    <div class="key-points">
+      <div class="key-point">
+        <div class="kp-num">01</div>
+        <p class="kp-text">Harga emas dan perak mencatat rekor tertinggi sepanjang sejarah, didorong oleh ketidakpastian geopolitik dan ekonomi global.</p>
+      </div>
+      <div class="key-point">
+        <div class="kp-num">02</div>
+        <p class="kp-text">Singapura unggul sebagai lokasi penyimpanan karena tiga pilar: stabilitas geopolitik, kepercayaan hukum, dan pertahanan militer yang kuat.</p>
+      </div>
+      <div class="key-point">
+        <div class="kp-num">03</div>
+        <p class="kp-text">Vault modern seperti The Reserve dibangun dengan standar teknis dan keamanan kelas dunia, termasuk fondasi 32 meter dan lantai 90 kN/m&#178;.</p>
+      </div>
+      <div class="key-point">
+        <div class="kp-num">04</div>
+        <p class="kp-text">Emas fisik dipilih investor untuk menghindari risiko counterparty — pelajaran pahit dari krisis keuangan 2008 yang mengguncang sistem perbankan global.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
